@@ -18,22 +18,18 @@ import java.math.BigInteger;
  */
 public final class FibonacciLoop {
 
-    private FibonacciLoop() {
-        // Private constructor to prevent instantiation of this utility class.
-    }
+    // Private constructor to prevent instantiation of this utility class.
+    private FibonacciLoop() {}
 
-    /**
-     * Calculates the nth Fibonacci number.
-     *
-     * @param n The index of the Fibonacci number to calculate.
-     * @return The nth Fibonacci number as a BigInteger.
-     * @throws IllegalArgumentException if the input 'n' is a negative integer.
-     */
+    // Calculates the nth Fibonacci number.
+    // Instead of `long`, the `BigInteger` type is used, as it can store a much larger value.
     public static BigInteger compute(final int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Input 'n' must be a non-negative integer.");
         }
 
+        // n = 0  →  BigInteger.valueOf(0)  =  0
+        // n = 1  →  BigInteger.valueOf(1)  =  1
         if (n <= 1) {
             return BigInteger.valueOf(n);
         }
@@ -41,6 +37,8 @@ public final class FibonacciLoop {
         BigInteger prev = BigInteger.ZERO;
         BigInteger current = BigInteger.ONE;
 
+        // The index number starts at two because the numbers zero and one
+        // have already been accounted for at indices zero and one.
         for (int i = 2; i <= n; i++) {
             BigInteger next = prev.add(current);
             prev = current;
