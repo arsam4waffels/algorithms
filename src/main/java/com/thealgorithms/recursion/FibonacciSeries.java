@@ -32,12 +32,30 @@ public final class FibonacciSeries {
      * @throws IllegalArgumentException if n is negative
      */
     public static int fibonacci(int n) {
-        if (n < 0) {
+
+        if (n < 0)
             throw new IllegalArgumentException("n must be a non-negative integer");
-        }
-        if (n <= 1) {
+
+        // if n was either 0 or 1, return the same number as n
+        if (n <= 1)
             return n;
-        }
+
+        /*
+         * fibonacci(4)
+         * ├── fibonacci(3)
+         * │   ├── fibonacci(2)
+         * │   │   ├── fibonacci(1) = 1
+         * │   │   └── fibonacci(0) = 0
+         * │   │    = 1
+         * │   └── fibonacci(1) = 1
+         * │        = 2
+         * └── fibonacci(2)
+         *     ├── fibonacci(1) = 1
+         *     └── fibonacci(0) = 0
+         *          = 1
+         *
+         * fibonacci(50) → 2^50 = 1,125,899,906,842,624
+         */
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
 }
