@@ -19,8 +19,7 @@ import java.util.Map;
  * * @author Varun Upadhyay (https://github.com/varunu28)
  */
 public final class Fibonacci {
-    private Fibonacci() {
-    }
+    private Fibonacci() {}
 
     static final Map<Integer, Integer> CACHE = new HashMap<>();
 
@@ -31,10 +30,18 @@ public final class Fibonacci {
      * Outputs the nth fibonacci number
      * @throws IllegalArgumentException if n is negative
      */
-    public static int fibMemo(int n) {
+    public static int fibMemo(int n) { // Recursive + Cache
         if (n < 0) {
             throw new IllegalArgumentException("Input n must be non-negative");
         }
+
+        /*
+         * Fibonacci(4)
+         * ├── Fibonacci(3)
+         * │   ├── Fibonacci(2)  ← CACHE[2]=1
+         * │   └── Fibonacci(1)
+         * └── Fibonacci(2)      ← CACHE[2]=1
+         */
         if (CACHE.containsKey(n)) {
             return CACHE.get(n);
         }
@@ -57,12 +64,24 @@ public final class Fibonacci {
      * Outputs the nth fibonacci number
      * @throws IllegalArgumentException if n is negative
      */
-    public static int fibBotUp(int n) {
+    public static int fibBotUp(int n) { // Iterative + HashMap
         if (n < 0) {
             throw new IllegalArgumentException("Input n must be non-negative");
         }
         Map<Integer, Integer> fib = new HashMap<>();
 
+        /*
+         * Fibonacci(4)
+         *     → Fibonacci(3)
+         *         → Fibonacci(2)
+         *             → Fibonacci(1) = 1 <- start
+         *
+         * i=0 → fib[0] = 0
+         * i=1 → fib[1] = 1
+         * i=2 → fib[2] = fib[1] + fib[0] = 1
+         * i=3 → fib[3] = fib[2] + fib[1] = 2
+         * i=4 → fib[4] = fib[3] + fib[2] = 3
+         */
         for (int i = 0; i <= n; i++) {
             int f;
             if (i <= 1) {
@@ -124,8 +143,24 @@ public final class Fibonacci {
         if (n < 0) {
             throw new IllegalArgumentException("Input n must be non-negative");
         }
+        // The square root of the integer 5
         double squareRootOf5 = Math.sqrt(5);
+
+        // General Phi formula
+        // The square root of 5 is obtained by solving a quadratic equation.
         double phi = (1 + squareRootOf5) / 2;
+
+        /*
+         * In Binet's formula, we proceed as follows:
+         *
+         * first, we raise phi to the power of the requested number. Next, we retain that result
+         * and subtract from it the value of negative phi raised to the negative of the requested
+         * number. Finally, we divide the resulting value by the square root of 5 to obtain the
+         * final result.
+         *
+         * The final calculated value is ultimately converted to the `int` type.
+         * This entails certain risks, including data overflow and calculation errors.
+         */
         return (int) ((Math.pow(phi, n) - Math.pow(-phi, -n)) / squareRootOf5);
     }
 }
